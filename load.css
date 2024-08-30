@@ -1,0 +1,40 @@
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    transition: opacity 1s, visibility 1s;
+}
+
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader::after {
+    content: "";
+    width: 75px;
+    height: 75px;
+    border: 20px solid gray;
+    border-top-color: #7449f5;
+    border-bottom-color: #7449f5;
+    border-left-color: #3d1f98;
+    border-right-color: #3d1f98;
+    border-radius: 50%;
+    animation: loading 1s ease infinite;
+    background: url('munologo(3).png') center/contain no-repeat; 
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(0turn);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}

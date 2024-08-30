@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn - MUNO</title>
+    <link rel="stylesheet" href="survey.css">
+    <link rel="stylesheet" href="load.css">
+    <link rel="icon" href="munologo(3).png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: rgb(52, 152, 219,);
+            padding: 10px;
+            text-align: center;
+        }
+
+        #languageSelection {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: px;
+            margin-top: 0px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .center-text {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .language-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .language-list li {
+            cursor: pointer;
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .language-list li:hover {
+            background-color: rgb(51, 152, 219);
+            color: #fff;
+        }
+
+        .language-list li.selected {
+            background-color: rgb(51, 152, 219);
+            color: #fff;
+        }
+
+        button.continue {
+            opacity: 0;
+            width: 30%;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        button.continue.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="muno_main.html">
+            <img src="munologo(2).png" width="60" height="45">
+        </a>
+    </header>
+
+    <div id="languageSelection">
+        <h1 class="center-text">What language do you want to learn?</h1>
+        <ul id="languageList" class="language-list">
+            <li onclick="selectLanguage(this, 'English')">English</li>
+            <li onclick="selectLanguage(this, 'Français')">Français</li>
+            <li onclick="selectLanguage(this, 'Español')">Español</li>
+            <li onclick="selectLanguage(this, 'Deutsch')">Deutsch</li>
+            <li onclick="selectLanguage(this, '中文')">中文</li>
+        </ul>
+        <button onclick="continueToMainPage()" class="continue" type="button">
+            Continue
+        </button>
+    </div>
+    <p>Only English is available in our beta version.</p>
+    <div id="loader" class="loader">
+        <div class="loading-circle"></div>
+    </div>
+
+    <script src="load.js"></script>
+    <script>
+        function selectLanguage(element, language) {
+            var languageItems = document.querySelectorAll('.language-list li');
+            languageItems.forEach(item => item.classList.remove('selected'));
+
+            element.classList.add('selected');
+            updateContinueButtonState();
+
+            console.log('Selected language:', language);
+        }
+
+        function updateContinueButtonState() {
+            var continueButton = document.querySelector('.continue');
+            var selectedLanguage = document.querySelector('.language-list li.selected');
+
+            if (selectedLanguage && selectedLanguage.textContent.trim() === 'English') {
+                continueButton.classList.add('active');
+            } else {
+                continueButton.classList.remove('active');
+            }
+        }
+
+        function continueToMainPage() {
+            var selectedLanguage = document.querySelector('.language-list li.selected');
+
+            if (selectedLanguage && selectedLanguage.textContent.trim() === 'English') {
+                window.location.href = 'muno_learn.html';
+            } 
+        }
+    </script>
+</body>
+</html>

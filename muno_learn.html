@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn - MUNO</title>
+    <link rel="stylesheet" href="survey.css">
+    <link rel="stylesheet" href="load.css">
+    <link rel="icon" href="munologo(3).png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300&display=swap');
+      </style>
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            max-width: 100%;
+            overflow-x: hidden;
+            height: 8800px;
+        }
+
+        .sidenav {
+      height: 100%;
+      width: 120px;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: rgb(17, 17, 17);
+      padding-top: 80px;
+    }
+
+    .sidenav a {
+      padding: 6px 8px 6px 16px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #818181;
+      display: block;
+    }
+
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+    .main {
+      margin-left: 160px; 
+      font-size: 28px; 
+      padding: 0px 10px;
+    }
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .drawing {
+        position: absolute;
+        pointer-events: none;
+        z-index: 9999;
+        background-color: #000;
+        border-radius: 50%;
+    }
+    @media screen and (max-height: 450px) {
+      .sidenav {padding-top: 15px;}
+      .sidenav a {font-size: 18px;}
+    }
+
+
+
+        header {
+            background-color: rgb(52, 152, 219, 0);
+            padding: 10px;
+            margin-left: 20px;
+            text-align: center;
+            position: fixed;
+
+        }
+        header p{
+            font-family: 'Nunito Sans', sans-serif;
+            padding-right: 40px;
+            font-size: 1.2em;
+        }
+
+        #mainPage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin-top: 50px;
+            text-align: center;
+            max-width: 100%;
+        }
+
+        .animation-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .animation-container h1 {
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+            font-size: 9em;
+            pointer-events: none;
+        }
+
+        @keyframes slideLeft {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideRight {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes reverseSlideLeft {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes reverseSlideUp {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        @keyframes reverseSlideRight {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .slide-left {
+            animation: slideLeft 1s forwards;
+
+        }
+
+        .reverse-slide-left {
+            animation: reverseSlideLeft 1s forwards 0.2s; 
+        }
+
+        .slide-top {
+            animation: slideUp 1s forwards;
+        }
+
+        .reverse-slide-up {
+            animation: reverseSlideUp 1s forwards 0.2s; 
+        }
+
+        .slide-right {
+            animation: slideRight 1s forwards;
+        }
+
+        .reverse-slide-right {
+            animation: reverseSlideRight 1s forwards 0.2s; 
+        }
+
+        .hide {
+            opacity: 0;
+        }
+
+        .show {
+            transform: translateX(0) translateY(0);
+        }
+
+        .continue {
+            opacity: 0;
+            width: 30%;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            margin-top: 20px;
+        }
+
+        .continue.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #infoPanel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #infoContent {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #closeButton {
+            position: static;
+            top: 10px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 20px;
+
+        }
+        
+        .small-square.one {
+            position: relative;
+            top: 50px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            background-color: #00ff00;
+            border: 3px solid #0aa20ab5; 
+            border-radius: 8px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4em;
+            font-weight: bold;
+            color: white; 
+            transition: width 0.5s, height 0.5s, filter 0.5s; 
+        }
+        .small-square.one:hover {
+            cursor: pointer;
+            width: 195px;
+            filter: brightness(1.2); 
+        }
+
+        .small-square.one:hover::before{
+            font-size: 0.5em;
+            content: "Start Level"; 
+            opacity: 1;
+            transition: opacity 0.5s; 
+        }
+
+        .small-square.two,
+        .small-square.three,
+        .small-square.four,
+        .small-square.five {
+            position: relative;
+            top: 300px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            background-color: #00ff00;
+            border: 3px solid #0aa20ab5;
+            border-radius: 8px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4em;
+            font-weight: bold;
+            color: white;
+            transition: width 0.5s, height 0.5s, filter 0.5s; 
+        }
+
+        .small-square.two {
+    left: 25%;
+}
+
+.small-square.three {
+    left: 50%;
+}
+
+.small-square.four {
+    left: 75%;
+}
+
+.small-square.five {
+    top: 600px;
+    background: linear-gradient(to bottom, #00ff00, #ffff00);
+    border: 3px solid #00ff00;
+    border-radius: 0px;
+}
+
+.small-square.two:hover,
+.small-square.three:hover,
+.small-square.four:hover,
+.small-square.five:hover {
+    cursor: pointer;
+    width: 195px;
+    filter: brightness(1.2);
+}
+
+.small-square.two:hover::before,
+.small-square.three:hover::before,
+.small-square.four:hover::before,
+.small-square.five:hover::before {
+    font-size: 0.5em;
+    content: "Start Level";
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+.small-square.six,
+.small-square.nine,
+.small-square.seven,
+.small-square.ten,
+.small-square.eleven,
+.small-square.twelve,
+.small-square.thirteen,
+.small-square.fourteen,
+.small-square.fifteen,
+.small-square.sixteen,
+.small-square.seventeen,
+.small-square.eighteen,
+.small-square.nineteen,
+.small-square.twenty,
+.small-square.twenty-one,
+.small-square.twenty-two,
+.small-square.twenty-three,
+.small-square.twenty-four,
+.small-square.twenty-five,
+.small-square.twenty-six,
+.small-square.twenty-seven,
+.small-square.twenty-eight,
+.small-square.twenty-nine,
+.small-square.thirty,
+.small-square.quiz,
+.small-square.eight {
+    position: relative;
+    top: 900px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    font-weight: bold;
+    color: white;
+    transition: width 0.5s, height 0.5s, filter 0.5s;
+}
+
+.small-square.six {
+    left: 20%;
+    background-color: #ffff00a8;
+    border: 3px solid #a5a50b76;
+    border-radius: 8px;
+}
+
+.small-square.seven {
+    left: 40%;
+    background-color: #ffff00a8;
+    border: 3px solid #a5a50b76;
+    border-radius: 8px;
+}
+
+.small-square.eight {
+    left: 60%;
+    background-color: #ffff00a8;
+    border: 3px solid #a5a50b76;
+    border-radius: 8px;
+}
+
+.small-square.nine {
+    left: 80%;
+    background-color: #ffff00a8;
+    border: 3px solid #a5a50b76;
+    border-radius: 8px;
+}
+
+.small-square.ten {
+    left: 50%;
+    top: 1200px;
+    background: linear-gradient(to bottom, #ffff00a8, #d68e19);
+    border: 3px solid #ffff00a8;
+}
+
+.small-square.eleven {
+    left: 20%;
+    top: 1500px;
+    background-color: #d68e19;
+    border: 3px solid #a74d08;
+    border-radius: 8px;
+}
+
+.small-square.twelve {
+    left: 40%;
+    top: 1500px;
+    background-color: #d68e19;
+    border: 3px solid #a74d08;
+    border-radius: 8px;
+}
+
+.small-square.thirteen {
+    left: 60%;
+    top: 1500px;
+    background-color: #d68e19;
+    border: 3px solid #a74d08;
+    border-radius: 8px;
+}
+
+.small-square.fourteen {
+    left: 80%;
+    top: 1500px;
+    background-color: #d68e19;
+    border: 3px solid #a74d08;
+    border-radius: 8px;
+}
+
+.small-square.fifteen {
+    left: 50%;
+    top: 1800px;
+    background: linear-gradient(to bottom, #d68e19, #d7490c);
+    border: 3px solid #d68e19;
+}
+
+.small-square.sixteen {
+    left: 20%;
+    top: 2100px;
+    background-color: #d7490c;
+    border: 3px solid #8b2c03;
+    border-radius: 8px;
+}
+
+.small-square.seventeen {
+    left: 40%;
+    top: 2100px;
+    background-color: #d7490c;
+    border: 3px solid #8b2c03;
+    border-radius: 8px;
+}
+
+.small-square.eighteen {
+    left: 60%;
+    top: 2100px;
+    background-color: #d7490c;
+    border: 3px solid #8b2c03;
+    border-radius: 8px;
+}
+
+.small-square.nineteen {
+    left: 80%;
+    top: 2100px;
+    background-color: #d7490c;
+    border: 3px solid #8b2c03;
+    border-radius: 8px;
+}
+
+
+        
+        .small-square.twenty {
+            left: 50%;
+            top: 2400px;
+            background: linear-gradient(to bottom, #f66628, #bf0202); 
+            border: 3px solid #f66628;
+        }
+
+        .small-square.twenty-one {
+            left: 20%; 
+            top: 2700px;
+            background-color: #bf0202;
+            border: 3px solid #600000; 
+            border-radius: 8px; 
+
+        }
+
+        .small-square.twenty-two {
+            left: 40%; 
+            top: 2700px;
+            background-color: #bf0202;
+            border: 3px solid #600000;
+            border-radius: 8px; 
+
+        }
+        .small-square.twenty-three {
+            left: 60%; 
+            top: 2700px;
+            background-color: #bf0202;
+            border: 3px solid #600000; 
+            border-radius: 8px;
+
+        }
+        .small-square.twenty-four {
+            left: 80%; 
+            top: 2700px;
+            background-color: #bf0202;
+            border: 3px solid #600000; 
+            border-radius: 8px; 
+
+        }
+        .small-square.twenty-five {
+            left: 50%; 
+            top: 3000px;
+            border: 3px solid #bf0202;
+            background: linear-gradient(to bottom, #bf0202, #ef12b8); 
+        }
+        
+        .small-square.twenty-six {
+            top: 3300px;
+            left: 20%;
+            background-color: #ef12b8;
+            border: 3px solid #93026e; 
+            border-radius: 8px; 
+        }
+
+        .small-square.twenty-seven {
+            top: 3300px;
+
+            left: 40%; 
+            background-color: #ef12b8;
+            border: 3px solid #93026e; 
+            border-radius: 8px;
+        }
+        .small-square.twenty-eight {
+            left: 60%;
+            top: 3300px;
+            background-color: #ef12b8;
+            border: 3px solid #93026e; 
+            border-radius: 8px; 
+
+        }
+        .small-square.twenty-nine {
+            left: 80%; 
+            top: 3300px;
+            background-color: #ef12b8;
+            border: 3px solid #93026e; 
+            border-radius: 8px; 
+        }
+        .small-square.thirty {
+            left: 50%; 
+            top: 3600px;
+            background: linear-gradient(to bottom, #ef12b8, #840488); 
+            border: 3px solid #ef12b8;
+        }
+        .small-square.quiz {
+            left: 50%; 
+            top: 3900px;
+            width: 280px;
+            background-color: #840488;
+            border: 6px solid #5c065f; 
+            border-radius: 8px; 
+        }
+
+        .small-square.six:hover,
+
+        .small-square.ten:hover,
+        .small-square.seven:hover,
+        .small-square.nine:hover,
+        .small-square.eleven:hover,
+        .small-square.twelve:hover,
+        .small-square.thirteen:hover,
+        .small-square.fourteen:hover,
+        .small-square.fifteen:hover,
+        .small-square.sixteen:hover,
+        .small-square.seventeen:hover,
+        .small-square.eighteen:hover,
+        .small-square.nineteen:hover,
+        .small-square.twenty:hover,
+        .small-square.twenty-one:hover,
+        .small-square.twenty-two:hover,
+        .small-square.twenty-three:hover,
+        .small-square.twenty-four:hover,
+        .small-square.twenty-five:hover,
+        .small-square.twenty-six:hover,
+        .small-square.twenty-seven:hover,
+        .small-square.twenty-eight:hover,
+        .small-square.twenty-nine:hover,
+        .small-square.thirty:hover:hover,
+        
+        .small-square.eight:hover
+         {
+            cursor: pointer;
+            width: 195px; 
+            filter: brightness(1.2); 
+        }
+
+        .small-square.quiz:hover
+        {
+            cursor: pointer;
+            width: 400px; 
+            filter: brightness(1.2); 
+        }
+
+        .small-square.six:hover::before,
+
+        .small-square.eight:hover::before,
+        .small-square.ten:hover::before,
+        .small-square.nine:hover::before,
+        .small-square.eleven:hover::before,
+        .small-square.twelve:hover::before,
+        .small-square.thirteen:hover::before,
+        .small-square.fourteen:hover::before,
+        .small-square.fifteen:hover::before,
+        .small-square.sixteen:hover::before,
+        .small-square.seventeen:hover::before,
+        .small-square.eighteen:hover::before,
+        .small-square.nineteen:hover::before,
+        .small-square.twenty:hover::before,
+        .small-square.twenty-one:hover::before,
+        .small-square.twenty-two:hover::before,
+        .small-square.twenty-three:hover::before,
+        .small-square.twenty-four:hover::before,
+        .small-square.twenty-five:hover::before,
+        .small-square.twenty-six:hover::before,
+        .small-square.twenty-seven:hover::before,
+        .small-square.twenty-eight:hover::before,
+        .small-square.twenty-nine:hover::before,
+        .small-square.thirty:hover::before,
+        .small-square.seven:hover::before {
+            font-size: 0.5em;
+            content: "Start Level";
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        .small-square.quiz:hover::before{
+            font-size: 0.5em;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="muno_main.html">
+            <img src="munologo(2).png" width="60" height="45">
+        </a>
+        <p>Language : English</p>
+
+    </header>
+    
+    <div class="sidenav">
+        <a href="#" id="infoLink">Info</a>        
+        <a href="#services" id="pencilLink">Pencil</a>
+        <a href="muno_program.html">Change<br>language</a>
+
+      </div>
+    <div class="small-square one">1</div><div class="small-square two">2</div><div class="small-square three">3</div><div class="small-square four">4</div><div class="small-square five">5</div><div class="small-square six">6</div><div class="small-square seven">7</div><div class="small-square eight">8</div><div class="small-square nine">9</div><div class="small-square ten">10</div><div class="small-square eleven">11</div><div class="small-square twelve">12</div><div class="small-square thirteen">13</div><div class="small-square fourteen">14</div><div class="small-square fifteen">15</div><div class="small-square sixteen">16</div><div class="small-square seventeen">17</div><div class="small-square eighteen">18</div><div class="small-square nineteen">19</div><div class="small-square twenty">20</div><div class="small-square twenty-one">21</div><div class="small-square twenty-two">22</div><div class="small-square twenty-three">23</div><div class="small-square twenty-four">24</div><div class="small-square twenty-five">25</div><div class="small-square twenty-six">26</div><div class="small-square twenty-seven">27</div><div class="small-square twenty-eight">28</div><div class="small-square twenty-nine">29</div><div class="small-square thirty">30</div><div class="small-square quiz">QUIZ</div>
+
+    <div id="mainPage">
+        <div class="animation-container">
+            <h1 id="letsText" class="slide-left">LET'S</h1>
+        </div>
+        <div class="animation-container">
+            <h1 id="getText" class="slide-top">GET</h1>
+        </div>
+        <div class="animation-container">
+            <h1 id="startedText" class="slide-right">STARTED</h1>
+        </div>
+    </div>
+    <div id="infoPanel">
+        <div id="infoContent">
+            <p>This is where the language learning fun happens! Navigate through each level as you want, you can skip any level, though we recommend going through each level in order.</p>
+            <button id="closeButton">Close</button>
+        </div>
+    </div>
+
+
+    <div class="line one-two"></div>
+    <div class="line.one-four"></div>
+
+    <div id="loader" class="loader">
+        <div class="loading-circle"></div>
+    </div>
+
+    <script src="load.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(() => {
+                document.getElementById('letsText').classList.add('reverse-slide-left');
+                document.getElementById('getText').classList.add('reverse-slide-up');
+                document.getElementById('startedText').classList.add('reverse-slide-right');
+            }, 3000); 
+        });
+    </script>
+    <div id="overlay"></div>
+
+<script>
+        var isDrawing = false;
+        var drawingElement;
+
+        function enableDrawing() {
+            document.addEventListener("mousedown", startDrawing);
+            document.addEventListener("mousemove", draw);
+            document.addEventListener("mouseup", stopDrawing);
+        }
+
+        function startDrawing(event) {
+    if (event.target.tagName.toLowerCase() !== "canvas") {
+        isDrawing = true;
+        drawingElement = document.createElement("div");
+        drawingElement.classList.add("drawing");
+        document.body.appendChild(drawingElement);
+
+        var x = event.clientX + window.scrollX; 
+        var y = event.clientY + window.scrollY; 
+
+        drawingElement.style.left = x + "px";
+        drawingElement.style.top = y + "px";
+    }
+}
+
+function draw(event) {
+    if (isDrawing) {
+        var x = event.clientX + window.scrollX; 
+        var y = event.clientY + window.scrollY; 
+
+        var line = document.createElement("div");
+        line.classList.add("drawing-line");
+        line.style.position = "absolute";
+        line.style.width = "5px";
+        line.style.height = "5px";
+        line.style.background = "#000";
+        line.style.left = x + "px";
+        line.style.top = y + "px";
+
+        document.body.appendChild(line);
+    }
+}
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        document.getElementById("pencilLink").addEventListener("click", enableDrawing);
+    </script>
+
+        <script>
+            document.getElementById("infoLink").addEventListener("click", function () {
+                document.getElementById("infoPanel").style.display = "flex";
+            });
+    
+            document.getElementById("closeButton").addEventListener("click", function () {
+                document.getElementById("infoPanel").style.display = "none";
+            });
+        </script>
+        <script>
+            document.querySelector(".small-square.three").addEventListener("click", function() {
+                window.location.href = "muno_englv3.html";
+            });
+        </script>
+        <script>
+            document.querySelector(".small-square.one").addEventListener("click", function() {
+                window.location.href = "muno_englv1.html";
+            });
+        </script>
+        <script>
+        document.querySelector(".small-square.seven").addEventListener("click", function() {
+            window.location.href = "muno_englv7.html";
+        });
+    </script>
+    <script>
+        document.querySelector(".small-square.twelve").addEventListener("click", function() {
+            window.location.href = "muno_englv12.html";
+        });
+    </script>
+    <script>
+        document.querySelector(".small-square.sixteen").addEventListener("click", function() {
+            window.location.href = "muno_englv16.html";
+        });
+    </script>
+        <script>
+            document.querySelector(".small-square.twenty-four").addEventListener("click", function() {
+                window.location.href = "muno_englv24.html";
+            });
+        </script>
+                
+        
+ 
+</body>
+</html>

@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Survey - MUNO</title>
+    <link rel = "stylesheet" href="survey.css">
+    <link rel="icon" href="munologo(3).png" >
+    <link rel = "stylesheet" href="load.css">
+
+
+</head>
+ 
+<body>
+    <header>
+        <a href = "muno_main.html">
+            <img src="munologo(2).png" width="60" height="45"> 
+            <!-- <h2 class="muno">MUNO</h2> -->
+        </a>
+        
+    </header>
+
+    <div class = "loader"></div>
+    <h1>MUNO Survey Form</h1>
+
+    <form id="form">
+        <p>Responses will be secure in accordance to our <a href="muno_about.html" style="text-decoration: underline;">privacy policy</a>.</p>
+        <!-- Details -->
+        <div class="form-control">
+            <label for="name" id="label-name">
+                Name
+            </label>
+ 
+            <!-- Input Type Text -->
+            <input type="text" id="name"
+                   placeholder="Enter a name" />
+        </div> 
+ 
+        <div class="form-control">
+            <label for="age" id="label-age">
+                Select your age range
+            </label>
+ 
+            <!-- Dropdown options -->
+            <select name="age" id="age">
+                <option value="" disabled selected>Please select</option>
+                <option value="range1">6-12</option>
+                <option value="range2">13-18</option>
+                <option value="range3">18-24</option>
+                <option value="range4">25-32</option>
+                <option value="range5">33-40</option>
+                <option value="range6">41-49</option>
+                <option value="range7">50-59</option>
+                <option value="range8">60+</option>
+            </select>
+        </div>
+ 
+        <div class="form-control">
+            <label>
+                How often will you be practicing? 
+            </label>
+ 
+            <!-- Input Type Radio Button -->
+            <label for="recommed-1">
+                <input type="radio" id="recommed-1"
+                       name="recommed">Once per week
+                  </input>
+            </label>
+            <label for="recommed-2">
+                <input type="radio" id="recommed-2"
+                       name="recommed">Twice per week
+                  </input>
+            </label>
+            <label for="recommed-3">
+                <input type="radio" id="recommed-3"
+                       name="recommed">Three or more times per week
+                  </input>
+            </label>
+        </div>
+ 
+        <div class="form-control">
+            <label>Select the languages you are comfortable with
+            </label>
+            <!-- Input Type Checkbox -->
+            <label for="inp-1">
+                <input type="checkbox" name="inp">English
+                  </input>
+              </label>
+            <label for="inp-2">
+                <input type="checkbox" name="inp">Français
+                  </input>
+            </label>
+            <label for="inp-3">
+                <input type="checkbox" name="inp">Español
+                  </input>
+            </label>
+            <label for="inp-4">
+                <input type="checkbox" name="inp">Deutsch
+                  </input>
+            </label>
+            <label for="inp-5">
+                <input type="checkbox" name="inp">中文
+                  </input>
+            </label>
+            <label for="inp-5">
+                <input type="checkbox" name="inp">Other
+                  </input>
+            </label>
+        </div>
+ 
+        <p>Click continue when you are ready.</p>
+        <!-- Multi-line Text Input Control -->
+            <button onclick="location.href='muno_program.html'" type="button">
+            Continue
+        </button>
+    
+        <!-- <a href="muno_program.html">
+            <small>Continue as guest</small>
+        </a> -->
+    </form>
+    <script>
+        document.getElementById("age").value = "";
+        window.onload = function () {
+            document.getElementById("form").reset();
+            };
+    </script>
+    <script src="load.js"></script>
+
+</body>
+ 
+</html>
